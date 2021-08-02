@@ -1,0 +1,9 @@
+{% load wagtailimages_tags %}
+{% image icon max-180x180 as icon180x180 %}
+<link rel="apple-touch-icon" sizes="180x180" href="{{ icon180x180.url }}">
+{% image icon max-32x32 as icon32x32 %}
+<link rel="icon" type="image/png" sizes="32x32" href="{{ icon32x32.url }}">
+{% image icon max-16x16 as icon16x16 %}
+<link rel="icon" type="image/png" sizes="16x16" href="{{ icon16x16 }}">
+<meta name="msapplication-TileColor" content="{{color}}">
+<meta name="theme-color" content="{{color}}">

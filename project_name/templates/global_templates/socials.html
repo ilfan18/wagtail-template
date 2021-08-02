@@ -1,0 +1,11 @@
+{% load wagtailimages_tags %}
+<ul class="socials {{class}}">
+    {% for social in socials %}
+        <li class="socials__item">
+            <a href="{{ social.link }}" class="socials__item">
+                {% image social.icon max-30x30 as icon %}
+                <img src="{{ icon.url }}" alt="{{ icon.alt }}">
+            </a>
+        </li>
+    {% endfor %}
+</ul>

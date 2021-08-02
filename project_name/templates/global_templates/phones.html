@@ -1,0 +1,7 @@
+<ul class="phones {{class}}">
+    {% for phone in phones %}
+        <li class="phones__item">
+            <a href="tel:{{ phone.phone_num }}" class="phones__link">{{ phone.phone_num }}</a>
+        </li>
+    {% endfor %}
+</ul>
