@@ -1,8 +1,9 @@
 from django.db import models
-from colorfield.fields import ColorField
 from modelcluster.models import ClusterableModel
-from modelcluster.fields import ParentalKey
 from wagtail.core.models import Orderable
+from modelcluster.fields import ParentalKey
+from colorfield.fields import ColorField
+from wagtail.core.fields import RichTextField
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -16,7 +17,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
         verbose_name='Название вашей компании',
         max_length=200,
         blank=True,
-        null=True,
+        null=True
     )
 
     description = models.CharField(
@@ -30,7 +31,8 @@ class SiteSettings(BaseSetting, ClusterableModel):
     tagline = models.CharField(
         verbose_name='Слоган вашей компании',
         max_length=200,
-        null=True,
+        blank=True,
+        null=True
     )
 
     logo = models.ForeignKey(
@@ -43,27 +45,29 @@ class SiteSettings(BaseSetting, ClusterableModel):
         help_text='Рекомендуемые размеры изображения 100x100'
     )
 
-    site_copyright = models.CharField(
-        verbose_name='Копирайт вашей компании',
-        max_length=200,
-        blank=True,
-        null=True,
-    )
-
     favicon = models.ForeignKey(
         'wagtailimages.Image',
+        verbose_name='Иконка',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Иконка',
         help_text='Рекомендуемые размеры изображения 260x260'
     )
 
     theme_color = ColorField(
         format='hexa',
         verbose_name='Цветовая тема',
+        blank=True,
+        null=True,
         help_text='Цвет интерфейса и вкладки браузера Android, фона плитки в Windows'
+    )
+
+    site_copyright = models.CharField(
+        verbose_name='Копирайт вашей компании',
+        max_length=200,
+        blank=True,
+        null=True
     )
 
     panels = [
@@ -112,7 +116,7 @@ class PhoneItemHeader(Orderable):
         verbose_name='Телефон',
         max_length=20,
         blank=True,
-        null=True,
+        null=True
     )
 
     panels = [
@@ -131,7 +135,7 @@ class AdressItemHeader(Orderable):
         verbose_name='Адрес',
         max_length=200,
         blank=True,
-        null=True,
+        null=True
     )
 
     panels = [
@@ -150,14 +154,14 @@ class SocialItemHeader(Orderable):
         verbose_name='Название',
         max_length=200,
         blank=True,
-        null=True,
+        null=True
     )
 
     link = models.CharField(
         verbose_name='Ссылка',
         max_length=200,
         blank=True,
-        null=True,
+        null=True
     )
 
     icon = models.ForeignKey(
@@ -167,7 +171,7 @@ class SocialItemHeader(Orderable):
         on_delete=models.SET_NULL,
         related_name='+',
         verbose_name='Иконка',
-        help_text='Рекомендуемые размеры изображения 30x30',
+        help_text='Рекомендуемые размеры изображения 30x30'
     )
 
     panels = [
@@ -188,7 +192,7 @@ class PhoneItemFooter(Orderable):
         verbose_name='Телефон',
         max_length=20,
         blank=True,
-        null=True,
+        null=True
     )
 
     panels = [
@@ -207,7 +211,7 @@ class AdressItemFooter(Orderable):
         verbose_name='Адрес',
         max_length=200,
         blank=True,
-        null=True,
+        null=True
     )
 
     panels = [
@@ -226,14 +230,14 @@ class SocialItemFooter(Orderable):
         verbose_name='Название',
         max_length=200,
         blank=True,
-        null=True,
+        null=True
     )
 
     link = models.CharField(
         verbose_name='Ссылка',
         max_length=200,
         blank=True,
-        null=True,
+        null=True
     )
 
     icon = models.ForeignKey(
@@ -243,7 +247,7 @@ class SocialItemFooter(Orderable):
         on_delete=models.SET_NULL,
         related_name='+',
         verbose_name='Иконка',
-        help_text='Рекомендуемые размеры изображения 30x30',
+        help_text='Рекомендуемые размеры изображения 30x30'
     )
 
     panels = [

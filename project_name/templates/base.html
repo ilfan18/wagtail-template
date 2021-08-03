@@ -1,4 +1,5 @@
 {% load static wagtailuserbar %}
+{% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load custom_template_tags %}
 {% setvar settings.site_settings.SiteSettings as site_settings %}
@@ -20,13 +21,14 @@
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+        {# Favicon #}
+        {% include "global_templates/favicon.html" with icon=site_settings.favicon color=site_settings.theme_color %}
+
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/project_name.css' %}">
 
-        {# Favicon #}
-        {% include "global_templates/favicon.html" with icon=site_settings.favicon color=site_settings.theme_color %}
-
+        {# GoogleMaps #}
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
         {% endblock %}
@@ -34,9 +36,10 @@
 
     <body class="body {% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
-        
+        <div class="map">
+            {{ site_settings.map_embed|richtext }}
+        </div>
         {% block content %}{% endblock %}
-
         {{ site_settings.company_name }}
         {{ site_settings.description }}
         {{ site_settings.tagline }}
@@ -53,7 +56,6 @@
         {% include "global_templates/socials.html" with socials=site_settings.footer_socials.all class="socials-2"%}
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/project_name.js' %}"></script>
-
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
