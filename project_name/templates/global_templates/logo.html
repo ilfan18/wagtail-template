@@ -1,0 +1,40 @@
+{% load wagtailimages_tags %}
+<div class="logo {{ class }}">
+    {% if site_settings.logo %}
+        {% if page.is_main %}
+        <a href="/" class="logo__link">
+        {% endif %}
+            <div class="logo__img">
+                {% image site_settings.logo max-280x280 format-webp-lossless as logo_webp %}
+                {% image site_settings.logo max-280x280 format-png as logo_png %}
+                <picture>
+                    <source srcset="{{ logo_webp.url }}" type="image/webp">
+                    <source srcset="{{ logo_png.url }}" type="image/png"> 
+                    <img src="{{ logo_png.url }}" alt="{{ logo_png.alt }}">
+                </picture>
+            </div>
+        {% if page.is_main %}
+        </a>
+        {% endif %}
+    {% endif %}
+    {% if site_settings.company_name or site_settings.description %}
+        <div class="logo__txt">
+            {% if site_settings.company_name %}
+                {% if page.is_main %}
+                <a href="/" class="logo__link">
+                {% endif %}
+                <div class="logo__company-name">
+                    {{ site_settings.company_name }}
+                </div>
+                {% if page.is_main %}
+                </a>
+                {% endif %}
+            {% endif %}
+            {% if site_settings.description %}
+                <div class="logo__description">
+                    {{ site_settings.description }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

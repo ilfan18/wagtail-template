@@ -22,7 +22,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Favicon #}
-        {% include "global_templates/favicon.html" with icon=site_settings.favicon color=site_settings.theme_color %}
+        {% include "global_templates/favicon.html" with icon=site_settings.favicon %}
 
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
@@ -37,10 +37,8 @@
 
     <body class="body {% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
-        <div class="map">
-            {{ site_settings.map_embed|richtext }}
-        </div>
         {% block content %}{% endblock %}
+        {% include "global_templates/logo.html" with class="logo-1" %}
         {{ site_settings.company_name }}
         {{ site_settings.description }}
         {{ site_settings.tagline }}
