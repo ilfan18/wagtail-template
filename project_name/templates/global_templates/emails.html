@@ -1,0 +1,7 @@
+<ul class="emails {{class}}">
+    {% for email in emails %}
+        <li class="email__item">
+            <a href="mailto:{{ email.email_text }}" class="phones__link">{{ email.email_text }}</a>
+        </li>
+    {% endfor %}
+</ul>

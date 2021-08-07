@@ -55,14 +55,6 @@ class SiteSettings(BaseSetting, ClusterableModel):
         help_text='Рекомендуемые размеры изображения 260x260'
     )
 
-    theme_color = ColorField(
-        format='hexa',
-        verbose_name='Цветовая тема',
-        blank=True,
-        null=True,
-        help_text='Цвет интерфейса и вкладки браузера Android, фона плитки в Windows'
-    )
-
     site_copyright = models.CharField(
         verbose_name='Копирайт вашей компании',
         max_length=200,
@@ -80,6 +72,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
                 InlinePanel('header_phones', label='Телефоны'),
                 InlinePanel('header_adresses', label='Адреса'),
                 InlinePanel('header_socials', label='Социальные сети'),
+                InlinePanel('header_emails', label='Адреса электронной почты'),
             ],
             heading='Контакты в шапке'
         ),
@@ -88,16 +81,11 @@ class SiteSettings(BaseSetting, ClusterableModel):
                 InlinePanel('footer_phones', label='Телефоны'),
                 InlinePanel('footer_adresses', label='Адреса'),
                 InlinePanel('footer_socials', label='Социальные сети'),
+                InlinePanel('footer_emails', label='Адреса электронной почты'),
             ],
             heading='Контакты в подвале'
         ),
-        MultiFieldPanel(
-            [
-                ImageChooserPanel('favicon'),
-                FieldPanel('theme_color'),
-            ],
-            heading='Фавикон'
-        ),
+        ImageChooserPanel('favicon', heading='Фавикон'),
         FieldPanel('site_copyright'),
     ]
 
@@ -181,6 +169,25 @@ class SocialItemHeader(Orderable):
     ]
 
 
+class EmailItemHeader(Orderable):
+    parent = ParentalKey(
+        'SiteSettings',
+        on_delete=models.CASCADE,
+        related_name='header_emails'
+    )
+
+    email_text = models.CharField(
+        verbose_name='Э-мейл',
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    panels = [
+        FieldPanel('email_text'),
+    ]
+
+
 class PhoneItemFooter(Orderable):
     parent = ParentalKey(
         'SiteSettings',
@@ -254,4 +261,23 @@ class SocialItemFooter(Orderable):
         FieldPanel('title'),
         FieldPanel('link'),
         ImageChooserPanel('icon'),
+    ]
+
+
+class EmailItemFooter(Orderable):
+    parent = ParentalKey(
+        'SiteSettings',
+        on_delete=models.CASCADE,
+        related_name='footer_emails'
+    )
+
+    email_text = models.CharField(
+        verbose_name='Э-мейл',
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    panels = [
+        FieldPanel('email_text'),
     ]
