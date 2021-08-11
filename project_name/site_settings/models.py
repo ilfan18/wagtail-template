@@ -85,8 +85,8 @@ class SiteSettings(BaseSetting, ClusterableModel):
             ],
             heading='Контакты в подвале'
         ),
-        ImageChooserPanel('favicon', heading='Фавикон'),
         FieldPanel('site_copyright'),
+        ImageChooserPanel('favicon', heading='Фавикон'),
     ]
 
     class Meta:
