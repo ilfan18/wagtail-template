@@ -26,6 +26,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 INSTALLED_APPS = [
     'project_name.site_settings',
     'project_name.home',
+    'project_name.inner_page',
     'project_name.templatetags',
     'search',
 
