@@ -38,23 +38,6 @@
     <body class="body {% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
         {% block content %}{% endblock %}
-        {% include "global_templates/logo.html" with class="logo-1" %}
-        {{ site_settings.company_name }}
-        {{ site_settings.description }}
-        {{ site_settings.tagline }}
-        {% image site_settings.logo max-280x280 as logo %}
-        <img src="{{ logo.url }}" alt="">
-        {{ site_settings.site_copyright }}
-        В шапке:
-        {% include "global_templates/phones.html" with phones=site_settings.header_phones.all class="phones-1" %}
-        {% include "global_templates/adresses.html" with adresses=site_settings.header_adresses.all class="adresses-1" %}
-        {% include "global_templates/socials.html" with socials=site_settings.header_socials.all class="socials-1"%}
-        {% include "global_templates/emails.html" with emails=site_settings.header_emails.all class="emails-1"%}
-        В подвале:
-        {% include "global_templates/phones.html" with phones=site_settings.footer_phones.all class="phones-2" %}
-        {% include "global_templates/adresses.html" with adresses=site_settings.footer_adresses.all class="adresses-2" %}
-        {% include "global_templates/socials.html" with socials=site_settings.footer_socials.all class="socials-2"%}
-        {% include "global_templates/emails.html" with emails=site_settings.footer_emails.all class="emails-2"%}
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/project_name.js' %}"></script>
