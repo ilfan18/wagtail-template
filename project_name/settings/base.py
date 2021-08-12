@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'project_name.templatetags',
     'search',
 
+    "wagtail.contrib.table_block",
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.contrib.settings',
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'colorfield',
+    'wagtailmedia',
 
     'django.contrib.admin',
     'django.contrib.auth',

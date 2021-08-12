@@ -3,6 +3,12 @@ from wagtail.core.models import Page
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.core.fields import StreamField
 from project_name.streams import blocks
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.core.blocks import (
+    ListBlock,
+    CharBlock,
+    StructBlock,
+)
 
 
 class TextPage(Page):
@@ -20,6 +26,15 @@ class TextPage(Page):
             ('heading', blocks.HeadingBlock()),
             ('richtext', blocks.RichTextBlock()),
             ('quote', blocks.QuoteBlock()),
+            ('image', blocks.ImageBlock()),
+            ('embed', blocks.EmbedBlock()),
+            ('slider', blocks.SliderBlock()),
+            ('gallery', blocks.GalleryBlock()),
+            ('table', blocks.TableBlock()),
+            ('buttons', blocks.ButtonsBlock()),
+            ('media_and_text', blocks.MediaAndTextBlock()),
+            ('file', blocks.FileBlock()),
+            ('audio', blocks.AudioBlock()),
         ],
         null=True,
         blank=True,

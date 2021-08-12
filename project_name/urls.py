@@ -30,7 +30,7 @@ if settings.DEBUG:
                           document_root=settings.MEDIA_ROOT)
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
-    ]
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to
