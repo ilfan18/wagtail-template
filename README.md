@@ -57,3 +57,21 @@ socials.html | socials, class | Список из иконок соц. сете�
 emails.html | emails, class | Список из эмейлов
 favicon.html | icon | Фавиконы разного формата
 
+### Внутряняя страница
+Приложение стандартной внутренней страницы наполняется контентом из StreamField, блоки которого поределены в приложении `streams`. Стили и скрипты страницы должны быть в вайлах `css/inner_page.css` и `js/inner_page.js` соответсвенно. 
+
+### Блоки StreamField
+Блоки StreamField описаны в приложении `streams` в файле `streams\blocks.py`. Для корректной работы необходимо добавить файлы зависимостей в блоки `extra_css` и `extra_js`:
+
+```sh
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/swiper-bundle.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/streams.css' %}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/streams.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/fslightbox.js' %}"></script>
+{% endblock extra_js %}
+```
