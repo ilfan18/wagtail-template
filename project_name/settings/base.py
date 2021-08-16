@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
-    'colorfield',
+    'wagtail_color_panel',
     'wagtailmedia',
 
     'django.contrib.admin',

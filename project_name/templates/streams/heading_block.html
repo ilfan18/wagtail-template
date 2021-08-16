@@ -1,0 +1,13 @@
+{% if value.heading_size == "H2" %}
+<h2 class="heading--h2">
+    {{ value.heading_text }}
+</h2>
+{% elif value.heading_size == "H3" %}
+<h3 class="heading--h3">
+    {{ value.heading_text }}
+</h3>
+{% elif value.heading_size == "H4" %}
+<h4 class="heading--h4">
+    {{ value.heading_text }}
+</h4>
+{% endif %}

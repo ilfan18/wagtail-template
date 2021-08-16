@@ -1,0 +1,28 @@
+{% load wagtailimages_tags %}
+{% load custom_template_tags %}
+{% setvar value.image_position as i_p %}
+<div class="image-block {% if i_p == "left" %}image-block--align-left{% elif i_p == "center" %}
+image-block--align-center{% elif i_p == "right" %}image-block--align-right{% elif i_p == "full-width" %}image-block--full-width{% endif %}">
+    <div class="image-block__inner">
+        {% image value.image original format-webp-lossless as image_webp %}
+        {% image value.image original format-png as image_png %}
+        {% if value.image_caption %}
+        <figure class="image-block__wrapper image-block__inner--caption">
+            <picture>
+                <source srcset="{{ image_webp.url }}" type="image/webp">
+                <source srcset="{{ image_png.url }}" type="image/png"> 
+                <img src="{{ image_png.url }}" alt="{{ image_png.alt }}">
+            </picture>
+            <figcaption class="image-block__caption">{{ value.image_caption }}</figcaption>
+        </figure>
+        {% else %}
+        <div class="image-block__wrapper">
+            <picture>
+                <source srcset="{{ image_webp.url }}" type="image/webp">
+                <source srcset="{{ image_png.url }}" type="image/png"> 
+                <img src="{{ image_png.url }}" alt="{{ image_png.alt }}">
+            </picture>
+        </div>
+        {% endif %}
+    </div>
+</div>

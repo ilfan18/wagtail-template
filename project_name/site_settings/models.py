@@ -2,7 +2,6 @@ from django.db import models
 from modelcluster.models import ClusterableModel
 from wagtail.core.models import Orderable
 from modelcluster.fields import ParentalKey
-from colorfield.fields import ColorField
 from wagtail.core.fields import RichTextField
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel

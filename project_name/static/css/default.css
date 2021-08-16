@@ -2,3 +2,7 @@ html {
 	font-size: 62.5%;
 	scroll-behavior: smooth;
 }
+body {
+	font-size: 1.8rem;
+	padding: 0 1.5rem;
+}

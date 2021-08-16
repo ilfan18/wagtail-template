@@ -1,0 +1,33 @@
+{% load wagtailimages_tags %}
+<div class="slider-block">
+    <div class="slider-block__inner swiper-container" data-slider>
+        <div class="swiper-wrapper">
+            {% for image in value.images %}
+            <div class="swiper-slide">
+                {% image image.image original format-webp-lossless as image_webp %}
+                {% image image.image original format-png as image_png %}
+                {% if image.caption %}
+                <figure class="swiper-slide__inner image-block__inner--caption">
+                    <picture>
+                        <source srcset="{{ image_webp.url }}" type="image/webp">
+                        <source srcset="{{ image_png.url }}" type="image/png"> 
+                        <img src="{{ image_png.url }}" alt="{{ image_png.alt }}">
+                    </picture>
+                    <figcaption class="swiper-slide__caption">{{ image.caption }}</figcaption>
+                </figure>
+                {% else %}
+                <div class="swiper-slide__inner">
+                    <picture>
+                        <source srcset="{{ image_webp.url }}" type="image/webp">
+                        <source srcset="{{ image_png.url }}" type="image/png"> 
+                        <img src="{{ image_png.url }}" alt="{{ image_png.alt }}">
+                    </picture>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</div>

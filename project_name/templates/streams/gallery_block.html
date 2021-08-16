@@ -1,0 +1,31 @@
+{% load wagtailimages_tags %}
+<div class="gallery-block">
+    <ul class="gallery-block__list">
+        {% for image in value.images %}
+        <li class="gallery-block__item">
+            {% image image.image original format-webp-lossless as image_webp %}
+            {% image image.image original format-png as image_png %}
+            <a data-fslightbox="gallery-{{block.id}}" href="{{ image_png.url }}">
+                {% if image.caption %}
+                <figure class="gallery-block__item-inner gallery-block__item--caption">
+                    <picture>
+                        <source srcset="{{ image_webp.url }}" type="image/webp">
+                        <source srcset="{{ image_png.url }}" type="image/png"> 
+                        <img src="{{ image_png.url }}" alt="{{ image_png.alt }}">
+                    </picture>
+                    <figcaption class="gallery-block__item-caption">{{ image.caption }}</figcaption>
+                </figure>
+                {% else %}
+                <div class="image-block__item-inner">
+                    <picture>
+                        <source srcset="{{ image_webp.url }}" type="image/webp">
+                        <source srcset="{{ image_png.url }}" type="image/png"> 
+                        <img src="{{ image_png.url }}" alt="{{ image_png.alt }}">
+                    </picture>
+                </div>
+                {% endif %}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

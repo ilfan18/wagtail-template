@@ -5,16 +5,28 @@
 {% block body_class %}body--text-page{% endblock %}
 
 {% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/swiper-bundle.min.css' %}">
 {% endblock extra_css %}
 
 {% block extra_js %}
+<script type="text/javascript" src="{% static 'js/inner_page.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/fslightbox.js' %}"></script>
 {% endblock extra_js %}
 
 {% block content %}
 
 <div class="container">
     {% for block in page.content %}
-        {% include_block block %}
+        {% if block.block_type != "table" %}
+            {% include_block block %}
+        {% else %}
+            <div class="table-block">
+                <div class="table-block__wrapper">
+                    {% include_block block %}
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 

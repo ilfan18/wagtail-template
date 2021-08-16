@@ -1,0 +1,17 @@
+<div class="blockquote-block">
+    <figure class="blockquote-block__wrapper">
+        <blockquote class="blockquote-block__blockquote">
+            {{ value.quote_text }}
+        </blockquote>
+        <figcaption class="blockquote-block__footer">
+            {% if value.quote_author %}
+                {{ value.quote_author }}
+            {% endif %}
+            {% if value.quote_reference %}
+                <cite title="{{ value.quote_reference }}">
+                    {{ value.quote_reference}}
+                </cite>
+            {% endif %}
+        </figcaption>
+    </figure>
+</div>

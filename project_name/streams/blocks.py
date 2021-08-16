@@ -1,17 +1,18 @@
 """StreamFields"""
-
+from django.utils.html import format_html, format_html_join
+from django.forms.utils import flatatt
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtailmedia.blocks import AbstractMediaChooserBlock
+from wagtail_color_panel.blocks import NativeColorBlock
 
 
 class HeadingBlock(blocks.StructBlock):
 
     heading_text = blocks.CharBlock(
-        required=True,
         max_length=250,
         label='Текст заголовка',
     )
@@ -41,12 +42,19 @@ class RichTextBlock(blocks.RichTextBlock):
 
 class QuoteBlock(blocks.StructBlock):
 
-    quote_text = blocks.BlockQuoteBlock(label='Текст цитаты')
+    quote_text = blocks.RichTextBlock(
+        label='Текст цитаты',
+    )
 
     quote_author = blocks.CharBlock(
-        required=True,
+        required=False,
         max_length=200,
         label='Автор цитаты',
+    )
+
+    quote_reference = blocks.CharBlock(
+        required=False,
+        label='Источник цитаты',
     )
 
     class Meta:
@@ -59,10 +67,20 @@ class ImageBlock(blocks.StructBlock):
 
     image = ImageChooserBlock(label='Файл изображения')
 
-    caption = blocks.CharBlock(
-        required=True,
+    image_caption = blocks.CharBlock(
+        required=False,
         max_length=250,
         label='Подпись',
+    )
+
+    image_position = blocks.ChoiceBlock(
+        choices=[
+            ('left', 'Слева'),
+            ('center', 'В центре'),
+            ('right', 'Справа'),
+            ('full-width', 'По ширине'),
+        ],
+        label='Положение изображения'
     )
 
     class Meta:
@@ -80,7 +98,7 @@ class EmbedBlock(blocks.StructBlock):
             ('left', 'Слева'),
             ('center', 'В центре'),
             ('right', 'Справа'),
-            ('full_width', 'Справа'),
+            ('full-width', 'По ширине'),
         ],
         label='Положение контента'
     )
@@ -98,7 +116,7 @@ class SliderBlock(blocks.StructBlock):
             [
                 ('image', ImageChooserBlock(label='Изображение')),
                 ('caption', blocks.CharBlock(
-                    label='Подпись изображения', required=True, max_length=250,)),
+                    label='Подпись изображения', required=False, max_length=250,)),
             ]
         ),
         label='Изображения в слайдере'
@@ -132,23 +150,27 @@ class GalleryBlock(blocks.StructBlock):
 class TableBlock(TableBlock):
 
     class Meta:
-        template = 'streams/table_block.html'
         icon = 'table'
         label = 'Таблица'
 
 
 class ButtonsBlock(blocks.StructBlock):
 
-    buttons_text = blocks.ListBlock(
-        child_block=blocks.CharBlock(
-            label='Кнопка',
-            required=True,
-            max_length=250,
+    buttons_items = blocks.ListBlock(
+        child_block=blocks.StructBlock(
+            [
+                ('text', blocks.CharBlock(
+                    label='Текст кнопки',
+                    max_length=250,
+                )),
+                ('url', blocks.PageChooserBlock(label='Ссылка')),
+            ],
+            label='Кнопка'
         ),
         label='Кнопки'
     )
 
-    button_direction = blocks.ChoiceBlock(
+    buttons_direction = blocks.ChoiceBlock(
         choices=[
             ('horizontal', 'Горизонтальное'),
             ('vertical', 'Вертикальное'),
@@ -156,37 +178,32 @@ class ButtonsBlock(blocks.StructBlock):
         label='Положение кнопок'
     )
 
+    buttons_color = NativeColorBlock(default="#000000", label='Цвет кнопок')
+
     class Meta:
         template = 'streams/buttons_block.html'
         icon = 'tick-inverse'
         label = 'Кнопки'
 
 
-class MediaAndTextBlock(blocks.StructBlock):
+class ImageAndTextBlock(blocks.StructBlock):
 
     text = blocks.RichTextBlock(label='Текст')
 
-    media_content = blocks.StreamBlock(
-        [
-            ('image', ImageChooserBlock(label='Изображение')),
-            ('video', EmbedBlock(label='Видео')),
-        ],
-        label='Медиа',
-        max_num=1
-    )
+    image = ImageChooserBlock(label='Изображение')
 
     position = blocks.ChoiceBlock(
         choices=[
             ('text_left', 'Текст слева'),
             ('text_right', 'Текст справа'),
         ],
-        label='Положение текст'
+        label='Положение текста'
     )
 
     class Meta:
-        template = 'streams/media_and_text_block.html'
+        template = 'streams/image_and_text_block.html'
         icon = 'placeholder'
-        label = 'Медиа и текст'
+        label = 'Изображение и текст'
 
 
 class FileBlock(DocumentChooserBlock):
@@ -197,36 +214,12 @@ class FileBlock(DocumentChooserBlock):
         label = 'Файл'
 
 
-class AudioBlock(AbstractMediaChooserBlock):
-    def render_basic(self, value, context=None):
-        if not value:
-            return ''
+class MediaBlock(AbstractMediaChooserBlock):
 
-        if value.type == 'video':
-            player_code = '''
-            <div>
-                <video width="320" height="240" controls>
-                    {0}
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            '''
-        else:
-            player_code = '''
-            <div>
-                <audio controls>
-                    {0}
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
-            '''
-
-        return format_html(player_code, format_html_join(
-            '\n', "<source{0}>",
-            [[flatatt(s)] for s in value.sources]
-        ))
+    def __str__(self):
+        return self.title
 
     class Meta:
-        template = 'streams/audio_block.html'
+        template = 'streams/media_block.html'
         icon = 'media'
-        label = 'Аудио'
+        label = 'Медиа'

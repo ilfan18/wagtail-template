@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+{% load custom_template_tags %}
+{% setvar value.buttons_direction as b_d %}
+<div class="buttons-block">
+    <ul class="buttons-block__list {% if b_d %}buttons-block__list--horizontal{% else %}buttons-block__list--vertical{% endif %}">
+        {% for item in value.buttons_items %}
+        <li class="buttons-block__item">
+            <a href="{% pageurl item.url %}">{{ item.text }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

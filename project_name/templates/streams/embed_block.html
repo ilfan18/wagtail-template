@@ -1,0 +1,8 @@
+{% load custom_template_tags %}
+{% setvar value.embed_position as e_p %}
+<div class="embed-block {% if e_p == "left" %}embed-block--align-left{% elif e_p == "center" %}
+embed-block--align-center{% elif e_p == "right" %}embed-block--align-right{% elif e_p == "full-width" %}embed-block--full-width{% endif %}">
+    <div class="embed-block__wrapper">
+        <iframe src="{{ value.embed.url|embedurl }}" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
